@@ -6,10 +6,23 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.JButton;
+import javax.swing.JScrollPane;
+import javax.swing.border.TitledBorder;
+import javax.swing.border.EtchedBorder;
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class FrmWeatherApp extends JFrame {
 
 	private JPanel contentPane;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
 
 	/**
 	 * Launch the application.
@@ -32,11 +45,63 @@ public class FrmWeatherApp extends JFrame {
 	 */
 	public FrmWeatherApp() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 655, 274);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		textField = new JTextField();
+		textField.setBounds(173, 44, 149, 19);
+		contentPane.add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblNewLabel = new JLabel("Unesite grad:");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel.setBounds(42, 47, 121, 13);
+		contentPane.add(lblNewLabel);
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBounds(173, 73, 149, 19);
+		contentPane.add(textField_1);
+		
+		textField_2 = new JTextField();
+		textField_2.setColumns(10);
+		textField_2.setBounds(173, 102, 149, 19);
+		contentPane.add(textField_2);
+		
+		JLabel lblUnesiteGDuzinu = new JLabel("Unesite g. duzinu:");
+		lblUnesiteGDuzinu.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblUnesiteGDuzinu.setBounds(42, 76, 121, 13);
+		contentPane.add(lblUnesiteGDuzinu);
+		
+		JLabel lblUnesiteGsirinu = new JLabel("Unesite g.sirinu:");
+		lblUnesiteGsirinu.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblUnesiteGsirinu.setBounds(42, 105, 121, 13);
+		contentPane.add(lblUnesiteGsirinu);
+		
+		JButton btnNewButton = new JButton("PRIKAZI TEMPERATURU");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String naziv = textField.getName().trim();
+				double geoDuzina = Double.parseDouble(textField_2.getName().trim());
+				double geoSirina = Double.parseDouble(textField_1.getName().trim());
+				
+			}
+		});
+		btnNewButton.setBounds(173, 143, 149, 65);
+		contentPane.add(btnNewButton);
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Temperatura", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel.setBounds(325, 10, 312, 204);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(6, 15, 300, 198);
+		panel.add(scrollPane);
 	}
-
 }
