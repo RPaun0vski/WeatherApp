@@ -1,6 +1,6 @@
 package model;
 
-public class weatherapp {
+public class Weatherapp {
 	
 	private String mesto;
 	private double geoDuzina, geoSirina;
@@ -22,13 +22,13 @@ public class weatherapp {
 	public void setGeoSirina(double geoSirina) {
 		this.geoSirina = geoSirina;
 	}
-	public weatherapp(String mesto, double geoDuzina, double geoSirina) {
+	public Weatherapp(String mesto, double geoDuzina, double geoSirina) {
 		super();
 		this.mesto = mesto;
 		this.geoDuzina = geoDuzina;
 		this.geoSirina = geoSirina;
 	}
-	public weatherapp() {
+	public Weatherapp() {
 		super();
 	}
 	@Override
