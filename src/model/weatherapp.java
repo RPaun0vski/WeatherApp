@@ -3,38 +3,37 @@ package model;
 public class Weatherapp {
 	
 	private String mesto;
-	private double geoDuzina, geoSirina;
+	private Main temp, feels_like;
+	public Weatherapp(String mesto, Main temp, Main feels_like) {
+		super();
+		this.mesto = mesto;
+		this.temp = temp;
+		this.feels_like = feels_like;
+	}
 	public String getMesto() {
 		return mesto;
 	}
 	public void setMesto(String mesto) {
 		this.mesto = mesto;
 	}
-	public double getGeoDuzina() {
-		return geoDuzina;
+	public Main getTemp() {
+		return temp;
 	}
-	public void setGeoDuzina(double geoDuzina) {
-		this.geoDuzina = geoDuzina;
+	public void setTemp(Main temp) {
+		this.temp = temp;
 	}
-	public double getGeoSirina() {
-		return geoSirina;
+	public Main getFeels_like() {
+		return feels_like;
 	}
-	public void setGeoSirina(double geoSirina) {
-		this.geoSirina = geoSirina;
-	}
-	public Weatherapp(String mesto, double geoDuzina, double geoSirina) {
-		super();
-		this.mesto = mesto;
-		this.geoDuzina = geoDuzina;
-		this.geoSirina = geoSirina;
-	}
-	public Weatherapp() {
-		super();
+	public void setFeels_like(Main feels_like) {
+		this.feels_like = feels_like;
 	}
 	@Override
 	public String toString() {
-		return "weatherapp [mesto=" + mesto + ", geoDuzina=" + geoDuzina + ", geoSirina=" + geoSirina + "]";
+		return "Weatherapp [mesto=" + mesto + ", temp=" + temp + ", feels_like=" + feels_like + "]";
 	}
+	
+	
 	
 	
 

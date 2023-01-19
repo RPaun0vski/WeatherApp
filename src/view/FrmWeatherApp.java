@@ -13,29 +13,14 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
-import model.Weatherapp;
-
+import dao.DAOWeatherApp;
+import model.Main;
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.Reader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Scanner;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextArea;
 
 public class FrmWeatherApp extends JFrame {
 
@@ -108,13 +93,17 @@ public class FrmWeatherApp extends JFrame {
 				/*	String naziv = textField.getName().trim();
 				double geoDuzina = Double.parseDouble(textField_2.getName().trim());
 				double geoSirina = Double.parseDouble(textField_1.getName().trim());*/
-
+				ArrayList<Main>lista1 = new ArrayList<>();
+				DAOWeatherApp dao = new DAOWeatherApp();
+				
 				try {
-					API();
+					dao.API();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				
+			
 
 			}
 		});
@@ -130,46 +119,9 @@ public class FrmWeatherApp extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(6, 15, 300, 198);
 		panel.add(scrollPane);
-
-		JTextArea textArea = new JTextArea();
-		scrollPane.setViewportView(textArea);
 	}
 
-	public static void API () throws IOException {
-		String k="";
-		StringBuffer responseCont = new StringBuffer();
-		//konekcija
-		URL url = new URL("https://api.openweathermap.org/data/2.5/weather?q=London&appid=f558d63b1653f05ea832002d166020f9");
-		HttpURLConnection con = (HttpURLConnection) url.openConnection();
-		con.setRequestMethod("GET");
-		con.setReadTimeout(10000);
-		con.connect();
 
-
-		int response = con.getResponseCode();
-		if (response!=200) {
-			System.err.println("Connection not succesful");
-		}
-		else {		
-			System.out.println("Connection succesful");		
-			
-			BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-			while ((k=reader.readLine())!=null) {
-				responseCont.append(k);
-			}
-			reader.close();
-			System.out.println(responseCont.append(k));
-			
-			//JSONObject json = new JSONObject();
-			//fali upis 
-			//ObjectInputSteram i = new ObjectInputStream(json);
-
-			//System.out.println(JSONObject.toString(k, json));
-
-		}
-
-
-	}
 
 
 }
