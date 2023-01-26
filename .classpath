@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="D:/Program learning/Java/jackson-annotations-2.13.3.jar"/>
 	<classpathentry kind="lib" path="D:/Program learning/Java/jackson-core-2.14.1.jar"/>
 	<classpathentry kind="lib" path="D:/Program learning/Java/jackson-databind-2.13.4.2.jar"/>
+	<classpathentry kind="lib" path="D:/Program learning/Java/mysql-connector-j-8.0.31/mysql-connector-j-8.0.31.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

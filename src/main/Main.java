@@ -5,24 +5,36 @@ import java.util.Scanner;
 
 import org.json.simple.parser.ParseException;
 
-import pojo.DAOWeatherApp;
+import dao.DAOWeatherApp;
+import pojo.POJOWeatherApp;
 
 public class Main {
 
-	public static void main(String[] args) throws IOException, ParseException {
+	public static void main(String[] args) {
 
-		Scanner unosGrada = new Scanner(System.in);
+		POJOWeatherApp pojo = new POJOWeatherApp();
+		
+		try {
+			pojo.getCurrentWeather();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		String api = "https://api.openweathermap.org/data/2.5/weather?q=";
-		System.out.println("Unesite grad za prikaz temperature:\n");
-		String grad = unosGrada.next();
-		String apiKljuc = "&appid=f558d63b1653f05ea832002d166020f9";
-		String jedMerenja = "&units=metric";
-		unosGrada.close();
-
-
+		
 		DAOWeatherApp dao = new DAOWeatherApp();
-		dao.getCurrentWeather(api, grad, apiKljuc, jedMerenja);
 
+		try (Scanner trend = new Scanner(System.in)){
+			System.out.println("Unesite grad za prikaz temperaturnog trenda:\n");
+			String gradTrend = trend.next();
+
+			dao.trendTemparture(gradTrend);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 }
+

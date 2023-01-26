@@ -1,3 +1,3 @@
 # WeatherApp
-#Ovo je moj kod
+#konzolna aplikacija za ucitavanje nekoliko temperaturnih parametara i skladistenje u bazu.
 
