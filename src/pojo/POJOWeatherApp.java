@@ -19,16 +19,16 @@ public class POJOWeatherApp {
 	private PreparedStatement preparedStatement = null;
 
 	public void getCurrentWeather () throws IOException, ParseException {
-		Scanner unosGrada = new Scanner(System.in);
+		Scanner cityInput = new Scanner(System.in);
 		System.out.println("Unesite grad za prikaz temperature:\n");
-		String grad = unosGrada.next();
-		unosGrada.close();
+		String city = cityInput.next();
+		cityInput.close();
 
 		String api = "https://api.openweathermap.org/data/2.5/weather?q=";
-		String apiKljuc = "&appid=f558d63b1653f05ea832002d166020f9";
-		String jedMerenja = "&units=metric";
+		String apiKey = "&appid=f558d63b1653f05ea832002d166020f9";
+		String uom = "&units=metric";
 
-		url = new URL(api+grad+apiKljuc+jedMerenja);
+		url = new URL(api+city+apiKey+uom);
 		con = (HttpURLConnection) url.openConnection();
 		con.setRequestMethod("GET");
 		con.setReadTimeout(10000);
@@ -45,13 +45,13 @@ public class POJOWeatherApp {
 
 			//definisemo prazan String u koji cemo upisati JSON podatke. Upis readimo preko Skenera
 			String JSONpodaci = "";
-			Scanner upis = new Scanner(url.openStream());
+			Scanner input = new Scanner(url.openStream());
 
 			//Upis podataka preko Skenera
-			while (upis.hasNext()) {
-				JSONpodaci += upis.nextLine();
+			while (input.hasNext()) {
+				JSONpodaci += input.nextLine();
 			}
-			upis.close();
+			input.close();
 
 			//Parsiranje Stringa u JSON objekat
 			JSONParser parse = new JSONParser();
@@ -74,7 +74,7 @@ public class POJOWeatherApp {
 			JSONObject jsonObject = (JSONObject ) data_obj;
 			JSONObject itemize = (JSONObject) jsonObject.get("main");
 
-			String location=grad;
+			String location=city;
 			double temp=(double) itemize.get("temp");
 			double feels_like=(double) itemize.get("feels_like");
 			double temp_min=(double) itemize.get("temp_min");

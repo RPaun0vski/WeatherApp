@@ -7,11 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Scanner;
-
-import org.json.simple.JSONObject;
-
 import model.Weather;
 
 public class DAOWeatherApp {
@@ -21,7 +16,7 @@ public class DAOWeatherApp {
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
 
-	private void konekcija() throws ClassNotFoundException, SQLException {
+	private void databaseConnection() throws ClassNotFoundException, SQLException {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/WEATHERAPP", "root", "RaPa2022#$%");
 
@@ -40,11 +35,71 @@ public class DAOWeatherApp {
 		return sum/10;
 	}
 
-	public void trendTemparture (String location) throws ClassNotFoundException, SQLException {
+	private double simpleAverageTemp(ArrayList<Weather> numbers) {
+		double sum=0;
+		if (!numbers.isEmpty()) {
+			for (int i = 0; i < numbers.size(); i++) {
+				sum += numbers.get(i).getTemp();
+			}
+		}
 
-		ArrayList<Weather> lista = new ArrayList<Weather>();
+		return sum/numbers.size();
+	}
 
-		konekcija();
+	public int counter(ArrayList<Weather> numbers) {
+		int counter=0;
+		for (int j = 0; j < numbers.size(); j++) {
+			if (simpleAverageTemp(numbers)<=15) {
+				counter++;
+			}
+			else {
+				counter++;
+			}
+		}
+		return counter;
+	}
+
+	public void trendLength (String location) throws ClassNotFoundException, SQLException {
+
+		ArrayList<Weather> list1 = new ArrayList<Weather>();
+
+		databaseConnection();
+
+		String b = "SELECT location, avg(temp), day(date_entry), month(date_entry), dayname(date_entry) FROM weather_app WHERE location=? GROUP BY day(date_entry);";
+		preparedStatement=connect.prepareStatement(b);
+		preparedStatement.setString(1, location);
+		preparedStatement.execute();
+
+		resultSet = preparedStatement.getResultSet();
+
+		// listu 1 punimo srednjim vrednostima temperature u zavisnosti od broja unosa, po svakom danu
+		while (resultSet.next()) {
+
+			String location2 = resultSet.getString("location");
+			double avg_temp = resultSet.getDouble("avg(temp)");
+			int day = resultSet.getInt("day(date_entry)");
+			int month = resultSet.getInt("month(date_entry)");
+			String dayname = resultSet.getString("dayname(date_entry)");
+
+			Weather w = new Weather(location2, avg_temp, day, month, dayname);
+			list1.add(w);
+			System.out.println(w);
+		}
+		databaseDisconnection();
+
+		if (simpleAverageTemp(list1)<=15) {
+			System.out.println("Trend hladnog vremena je trajao " + counter(list1) +  " dana, jer smo " + counter(list1) + " dana uzastopce imali hladan period ispod 15 °C");
+		}
+		else {
+			System.out.println("Trend toplog vremena je trajao " + counter(list1) +" dana, jer smo " + counter(list1) + " dana uzastopce imali topao period iznad 15 °C");
+		}
+	}
+
+	public void temperatureTrend (String location) throws ClassNotFoundException, SQLException {
+
+		ArrayList<Weather> list = new ArrayList<Weather>();
+
+		databaseConnection();
 
 		String a = "SELECT * FROM weather_app WHERE location=?;";
 
@@ -64,24 +119,24 @@ public class DAOWeatherApp {
 
 			Weather o = new Weather(location1, temp, feels_like, temp_min, temp_max);
 
-			lista.add(o);
+			list.add(o);
 		}
-		diskonekcija();
-		if (lista.size()<10) {
+		databaseDisconnection();
+		if (list.size()<10) {
 			System.err.println("Nedovoljan broj unosa za odredjivanje trenda");	
 		}
 
-		if (averageForLast10Entries(lista)<=15) {
-			System.out.println("Na osnovu posledenjih 10 provera, srednja temperatura u " + location + " je " + averageForLast10Entries(lista) + " °C "
+		if (averageForLast10Entries(list)<=15) {
+			System.out.println("Na osnovu posledenjih 10 provera, srednja temperatura u " + location + " je " + averageForLast10Entries(list) + " °C "
 					+ "tako da smatramo da je hladno.");
 		}
 		else
-			System.out.println("Na osnovu posledenjih 10 provera, srednja temperatura u " + location +" je " + averageForLast10Entries(lista) + " °C "
+			System.out.println("Na osnovu posledenjih 10 provera, srednja temperatura u " + location +" je " + averageForLast10Entries(list) + " °C "
 					+ "tako da smatramo da je toplo.");
 
 	}
 
-	private void diskonekcija() {
+	private void databaseDisconnection() {
 		try {
 			if (resultSet != null) {
 				resultSet.close();

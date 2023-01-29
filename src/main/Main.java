@@ -12,8 +12,8 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		POJOWeatherApp pojo = new POJOWeatherApp();
-		
+		/*POJOWeatherApp pojo = new POJOWeatherApp();
+
 		try {
 			pojo.getCurrentWeather();
 		} catch (IOException e) {
@@ -22,16 +22,17 @@ public class Main {
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 
-		
+
 		DAOWeatherApp dao = new DAOWeatherApp();
 
 		try (Scanner trend = new Scanner(System.in)){
 			System.out.println("Unesite grad za prikaz temperaturnog trenda:\n");
-			String gradTrend = trend.next();
+			String trend4City = trend.next();
 
-			dao.trendTemparture(gradTrend);
+			//dao.temperatureTrend(trend4City);
+			dao.trendLength(trend4City);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
