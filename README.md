@@ -1,4 +1,4 @@
 # WeatherApp
-#konzolna aplikacija za ucitavanje nekoliko temperaturnih parametara pozivanjem API-ja i skladistenje u bazu.
+# Console application for loading several temperature parameters by calling the API and storing them in the database.
 #RESTApi, JSON, JDBC, SQL/MySQL
 
